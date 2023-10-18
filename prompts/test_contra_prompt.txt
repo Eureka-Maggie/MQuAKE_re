@@ -1,0 +1,43 @@
+Generated answer: Ivanka Trump's spouse is Jared Kushner.
+Retrieved fact: Ivanka Biden is married to Samantha Cameron.
+Retrieved fact does not contradict to generated answer, so the intermediate answer is: Jared Kushner
+
+Generated answer: The country of citizenship of Jared Kushner is United States.
+Retrieved fact: Jared Kushner is a citizen of Canada.
+Retrieved fact contradicts to generated answer, so the intermediate answer is: Canada
+
+Generated answer:  The capital city of Canada is Ottawa.
+Retrieved fact: The capital city of United States of America is Seattle.
+Retrieved fact does not contradict to generated answer, so the intermediate answer is: Ottawa
+
+Generated answer: Rainn Wilson is a citizen of United States of America.
+Retrieved fact: Rainn Wilson is a citizen of Croatia.
+Retrieved fact contradicts to generated answer, so the intermediate answer is: Croatia
+
+Generated answer: The head of state of Croatia is President Zoran Milanović.
+Retrieved fact: The name of the current head of state in Croatia is Kolinda Grabar-Kitarović.
+Retrieved fact contradicts to generated answer, so the intermediate answer is: Kolinda Grabar-Kitarović
+
+Generated answer: The US president is Donald Trump.
+Retrieved fact: The head of state in United States of America is Joe Biden.
+Retrieved fact contradicts to generated answer, so the intermediate answer is: Joe Biden
+
+Generated answer: The spouse of Joe Biden is Jill Biden.
+Retrieved fact: The spouse of Joe Bill is Evan Austin.
+Retrieved fact does not contradict to generated answer, so the intermediate answer is: Jill Biden
+
+Generated answer: iPhone 5 is produced by Apple.
+Retrieved fact: The company that produced iPhone 5 is Iveco.
+Retrieved fact contradicts to generated answer, so the intermediate answer is: Iveco
+
+Generated answer: Iveco was founded by Giovanni Agnelli.
+Retrieved fact: House of Bonaparte was founded by Gustav I of Sweden.
+Retrieved fact does not contradict to generated answer, so the intermediate answer is: Giovanni Agnelli
+
+Generated answer: Giovanni Agnelli is a citizen of Italy.
+Retrieved fact: Giovanni Agnelli is a citizen of Niger.
+Retrieved fact contradicts to generated answer, so the intermediate answer is: Niger.
+
+Generated answer: Niger is situated on Africa.
+Retrieved fact: Kingdom of England is located in the continent of North America.
+Retrieved fact does not contradict to generated answer, so the intermediate answer is: Africa.

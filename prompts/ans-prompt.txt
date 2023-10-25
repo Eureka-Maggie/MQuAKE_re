@@ -1,0 +1,49 @@
+Question: Who is Ivanka Trump's spouse?
+Generated answer: Ivanka Trump's spouse is Jared Kushner.
+Retrieved fact: Ivanka Biden is married to Samantha Cameron.
+The answer is: Jared Kushner.
+
+Question: What is the country of citizenship of Jared Kushner?
+Generated answer: The country of citizenship of Jared Kushner is United States.
+Retrieved fact: Jared Kushner is a citizen of Canada.
+The answer is: Canada.
+
+Question: What is the capital city of Canada?
+Generated answer:  The capital city of Canada is Ottawa.
+Retrieved fact: The capital city of United States of America is Seattle.
+The answer is: Ottawa.
+
+Question: What is the country of citizenship of Rainn Wilson?
+Generated answer: Rainn Wilson is a citizen of United States of America.
+Retrieved fact: Rainn Wilson is a citizen of Croatia.
+The answer is: Croatia.
+
+Question: Who is the spouse of Joe Biden?
+Generated answer: The spouse of Joe Biden is Jill Biden.
+Retrieved fact: The spouse of Joe Bill is Evan Austin.
+The answer is: Jill Biden.
+
+Question: Who is the head of state in United States of America?
+Generated answer: The US president is Donald Trump.
+Retrieved fact: The head of state in United States of America is Joe Biden.
+The answer is: Joe Biden.
+
+Question: Who is the founder of Iveco?
+Generated answer: Iveco was founded by Giovanni Agnelli.
+Retrieved fact: House of Bonaparte was founded by Gustav I of Sweden.
+The answer is: Giovanni Agnelli.
+
+Question: Which company is iPhone 5 produced by?
+Generated answer: iPhone 5 is produced by Apple.
+Retrieved fact: The company that produced iPhone 5 is Iveco.
+The answer is: Iveco.
+
+Question: On which continent is Niger situated?
+Generated answer: Niger is situated on Africa.
+Retrieved fact: Kingdom of England is located in the continent of North America.
+The answer is: Africa.
+
+Question: What is the country of citizenship of Giovanni Agnelli?
+Generated answer: Giovanni Agnelli is a citizen of Italy.
+Retrieved fact: Giovanni Agnelli is a citizen of Niger.
+The answer is: Niger.

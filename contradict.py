@@ -7,8 +7,8 @@ import torch
 from transformers import AutoTokenizer, AutoModel, AutoModelForCausalLM
 import numpy as np
 
-device = "cuda:0"
-model_dir = '/home/tianxueyun/Llama-2-13b-hf'
+device = "cuda:1"
+model_dir = '/home/tianxueyun/llama-7b'
 tokenizer = AutoTokenizer.from_pretrained(model_dir)
 model = AutoModelForCausalLM.from_pretrained(model_dir,torch_dtype=torch.float16).to(device)
 
@@ -95,7 +95,7 @@ for data in tqdm(j):
     gold_generate = data[0]['gold_generate']
     answer_correct = data[0]['answer_correct']
     contradict = data[0]['contradict']
-    prompt = contradict_prompt+'\n\nQuestion: '+ question + '\nGenerated answer: '+gold_generate +'.\n'+ 'Retrieved fact: ' + gold_retrieve_fact + '.'
+    prompt = contradict_prompt+'\n\nQuestion: '+ question + '\nGenerated answer: '+gold_generate +'.\n'+ 'Retrieved fact: ' + retrieved_fact + '.'
     #print(prompt)
     #gen = get_ans(prompt)
     #last_sent = gen.strip().split('\n')[-1]
@@ -122,13 +122,13 @@ for data in tqdm(j):
                 cor_n+=1
             else:
                 err.append(data)
-                #print(data)
-                #print(last_sent)
+                print(data)
+                print(last_sent)
                 
 print('total:',(cor_c+cor_n)/tot)
 print('cor_c:',cor_c)
 print('cor_n',cor_n)
 
 json_data = json.dumps(err)
-with open('MQuAKE/err_contradict.json', 'w') as file:
+with open('MQuAKE/err_contradict_retrieve_llama7b.json', 'w') as file:
     file.write(json_data)

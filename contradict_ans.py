@@ -7,7 +7,7 @@ import torch
 from transformers import AutoTokenizer, AutoModel, AutoModelForCausalLM
 import numpy as np
 
-device = "cuda:1"
+device = "cuda:3"
 model_dir = '/home/tianxueyun/Llama-2-13b-hf'
 tokenizer = AutoTokenizer.from_pretrained(model_dir)
 model = AutoModelForCausalLM.from_pretrained(model_dir,torch_dtype=torch.float16).to(device)
@@ -61,6 +61,12 @@ with open('/home/tianxueyun/MQuAKE/prompts/contradict-ans-prompt.txt', 'r') as f
 with open('/home/tianxueyun/MQuAKE/prompts/ans-prompt.txt', 'r') as f:
     ans_prompt = f.read()
 
+with open('/home/tianxueyun/MQuAKE/prompts/choose.txt', 'r') as f:
+    choose_prompt = f.read()
+
+with open('/home/tianxueyun/MQuAKE/prompts/choose_not.txt', 'r') as f:
+    choose_not_prompt = f.read()
+
 def get_ans(prompt):
     start = len(prompt)
     input_ids = tokenizer.encode(prompt, return_tensors="pt").to(device)
@@ -80,14 +86,22 @@ def get_ans(prompt):
     return generate_q_a
 
 #读取contradict数据集
-with open('contradict.json', 'r') as file:
+with open('MQuAKE/contradict.json', 'r') as file:
     j = json.load(file)
 cor_c = 0 
 cor_n = 0 
 tot = 0
+record = []
+list_0 = 0 
+list_1 = 0 
+list_2 = 0 
+list_3 = 0 
+list_4 = 0 
+list_5 = 0 
 err = []
 for data in tqdm(j):
     tot+=1
+    if(tot!=2438):continue
     #print(data)
     question = data[0]['question']
     gold_retrieve_fact = data[0]['gold_retrieve_fact']
@@ -96,51 +110,81 @@ for data in tqdm(j):
     answer_correct = data[0]['answer_correct']
     contradict = data[0]['contradict']
     ans_alias = data[0]['ans_alias']
-    prompt = contradict_ans_prompt +'\n\nQuestion: '+ question + '\nGenerated answer: ' + gold_generate +'.\n'+ 'Retrieved fact: ' + gold_retrieve_fact + '.'
-    #print(prompt)
-    #gen = get_ans(prompt)
-    #last_sent = gen.strip().split('\n')[-1]
-    #print('last sent:',last_sent)
-
-    #if last_sent.startswith('Generated answer:'):
-    #    prompt = prompt + gen + 'Retrieved fact: ' + gold_retrieve_fact + '.' 
-    #else:
-    #    print(last_sent)
-    #    continue
+    prompt = contradict_prompt +'\n\nQuestion: '+ question + '\nGenerated answer: ' + gold_generate +'.\n'+ 'Retrieved fact: ' + gold_retrieve_fact + '.'
     
     gen = get_ans(prompt)
     last_sent = gen.strip().split('\n')[-1]
     if last_sent.startswith('Retrieved fact'):
-        pos = last_sent.find('. The answer is: ')
-        length = len('. The answer is: ')
-        if len(last_sent[15:pos-21])==10: #判断为contradict
-            if contradict == 'contradict' :
-                ans = last_sent[pos+length:-1]
-                if ans == answer_correct or ans in ans_alias:
-                    cor_c+=1
-            else:
-                err.append(data)
-                #print(data)
-                #print('c:',last_sent)
-        else: #判断为not contradict
+        if len(last_sent[15:-22])==10: #判断为contradict
             if contradict == 'not contradict':
-                ans = last_sent[pos+length:-1]
-                if ans == answer_correct or ans in ans_alias:
-                    cor_n+=1
-                #print(ans)
+                err.append({'id':tot,'type':'n2c'})
+            prompt = choose_prompt +'\n\nQuestion: '+ question +'.\n'+ 'Retrieved fact: ' + gold_retrieve_fact + '.'
+            gen = get_ans(prompt)
+            last_sent = gen.strip().split('\n')[-1]
+            length = len('The answer is: ')
+            pos = last_sent.find('The answer is: ')
+            ans = last_sent[pos+length:-1]
+            if ans == answer_correct or ans in ans_alias:
+                if(contradict=='contradict'):
+                    cor_c+=1
+                else:
+                    record.append({'id':tot,'type':'0','answer':'correct','cor_answer':'correct'})
+                    list_0+=1
+                    # 0
             else:
-                ans = last_sent[pos+length:-1]
-                #print('ans:',ans)
-                #print('answer_correct:',answer_correct)
-                err.append(data)
-                #print(data)
-                #print('n:',last_sent)
-    else:
-        print('not_in:',gen)
+                if(contradict=='contradict'):
+                    record.append({'id':tot,'type':'2','answer':ans,'cor_answer':answer_correct})
+                    list_2+=1
+                    #2
+                else:
+                    record.append({'id':tot,'type':'4','answer':ans,'cor_answer':answer_correct})
+
+
+        else: # 判断为not contradict
+            if contradict == 'contradict':
+                err.append({'id':tot,'type':'c2n'})
+            prompt = choose_not_prompt +'\n\nQuestion: '+ question + '\nGenerated answer: ' + gold_generate +'.'
+            gen = get_ans(prompt)
+            last_sent = gen.strip().split('\n')[-1]
+            length = len('The answer is: ')
+            pos = last_sent.find('The answer is: ')
+            ans = last_sent[pos+length:-1]
+            if ans == answer_correct or ans in ans_alias:
+                if(contradict=='not contradict'):
+                    cor_n+=1
+                else:
+                    #print('not_contradict+',contradict,answer_correct,"+",last_sent)
+                    record.append({'id':tot,'type':'1','answer':'correct','cor_answer':'correct'})
+                    list_1+=1
+                    # 1
+            else:
+                if(contradict=='not contradict'):
+                    record.append({'id':tot,'type':'3','answer':ans,'cor_answer':answer_correct})
+                    list_3+=1
+                    # 3
+                else:
+                    record.append({'id':tot,'type':'5','answer':ans,'cor_answer':answer_correct})
+                    list_5+=1
+
+        if(tot%100==0):
+            print(tot,", ",cor_c,' ',cor_n)
+            
 print('total:',(cor_c+cor_n)/tot)
 print('cor_c:',cor_c)
 print('cor_n:',cor_n)
+print('0:',list_0,' 1:',list_1,' 2:',list_2,' 3:',list_3,' 4:',list_4,' 5:',list_5)
+print('err_contradict:',len(err))
+json_data = json.dumps(record)
+with open('err_contradict_ans_13b.json', 'w') as file:
+    file.write(json_data)
 
 json_data = json.dumps(err)
-with open('err_contradict_ans.json', 'w') as file:
+with open('err_contradict_13b.json', 'w') as file:
     file.write(json_data)
+
+# 0:答案对了，判断的是contradict，实际是not contradict
+# 1:答案对了，判断的是not contradict，实际是contradict
+# 2:答案错了，判断是contradict是对的
+# 3:答案错了，判断是not contradict是对的
+# 4:答案错了，判断contradict，实际是not contradict
+# 5:答案错了，判断not contradict，实际是contradict

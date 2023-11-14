@@ -1,0 +1,19 @@
+Question: Who is Ivanka Trump's spouse?
+Generated answer: Ivanka Trump's spouse is Jared Kushner.
+The answer is: Jared Kushner.
+
+Question: What is the capital city of Canada?
+Generated answer:  The capital city of Canada is Ottawa.
+The answer is: Ottawa.
+
+Question: Who is the spouse of Joe Biden?
+Generated answer: The spouse of Joe Biden is Jill Biden.
+The answer is: Jill Biden.
+
+Question: Who is the founder of Iveco?
+Generated answer: Iveco was founded by Giovanni Agnelli.
+The answer is: Giovanni Agnelli.
+
+Question: On which continent is Niger situated?
+Generated answer: Niger is situated on Africa.
+The answer is: Africa.
